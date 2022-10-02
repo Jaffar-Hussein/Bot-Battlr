@@ -13,7 +13,16 @@ function BotsPage() {
     fetch(URL)
     .then(r => r.json())
     .then(data => setBots(data))
-  },[])
+  },[bots])
+
+  function deleteBot(id){
+    setBots(
+      bots.filter(bot => bot.id !== id)
+    )
+    setMyBots(
+      myBots.filter(bot => bot.id !== id)
+    )
+  }
   const updateCollection = (id) => {
     if (myBots.find(bot => bot.id === id)){
       setMyBots(
@@ -27,8 +36,8 @@ function BotsPage() {
   }
   return (
     <div>
-      <YourBotArmy myBots={myBots} updateCollection={updateCollection}/>
-      <BotCollection bots={bots} updateCollection={updateCollection}/>
+      <YourBotArmy myBots={myBots} updateCollection={updateCollection} deleteBot={deleteBot}/>
+      <BotCollection bots={bots} updateCollection={updateCollection} deleteBot={deleteBot}/>
     </div>
   )
 }
