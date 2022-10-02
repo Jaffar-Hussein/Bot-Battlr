@@ -15,15 +15,19 @@ function BotsPage() {
     .then(data => setBots(data))
   },[])
   const updateCollection = (id) => {
-    // console.log(bots.filter(bot => bot.id === id));
-    setMyBots(
-      [...myBots,bots.filter(bot => bot.id === id)[0]]
-    )
-    // console.log(myBots);
+    if (myBots.find(bot => bot.id === id)){
+      setMyBots(
+        myBots.filter(bot => bot.id !== id)
+      )
+    }else{
+      setMyBots(
+        [...myBots,bots.filter(bot => bot.id === id)[0]]
+      )
+    }
   }
   return (
     <div>
-      <YourBotArmy myBots={myBots}/>
+      <YourBotArmy myBots={myBots} updateCollection={updateCollection}/>
       <BotCollection bots={bots} updateCollection={updateCollection}/>
     </div>
   )
